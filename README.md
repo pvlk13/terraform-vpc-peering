@@ -6,13 +6,13 @@ Three important things required for the configuration to work are :
    - Non-Overlapping CIDRs
    - Route Table Updates : You must manually add a route in each VPC’s route table that points to the CIDR block of the other VPC, using the Peering Connection ID (pcx-xxxxxx) as the target.
    - Security Groups : You need to update your Security Group rules to allow inbound/outbound traffic from the private IP addresses (or Security Group IDs) of the peered VPC.
-# Key benefits include:
+### Key benefits include:
 
 - Improved security by keeping traffic within the AWS network
 - Lower latency compared to routing through the internet
 - No additional costs for data transfer within the same AWS region
 - No single point of failure or bandwidth bottleneck   
-
+### How to SSH ?
 Since there is no IGW, you can't SSH into these instances from your house. To test this in a real-world scenario, you would usually:
 
   - Use a Bastion Host in a third VPC that does have an IGW.
