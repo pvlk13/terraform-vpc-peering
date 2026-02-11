@@ -28,19 +28,7 @@ Since there is no IGW, you can't SSH into these instances from your house. To te
 ├── terraform.tfstate.backup
 ├── terraform.tfvars
 └── variables.tf
+providers.tf
 
-```hcl
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 6.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = var.region 
-}
 
    
