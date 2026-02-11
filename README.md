@@ -1,4 +1,9 @@
+
 # Project VPC - Peering without IGW
+
+## Architecture of the **VPC Peering**
+<img width="1494" height="842" alt="image" src="https://github.com/user-attachments/assets/0821ed71-e942-4ad0-ad44-267896743c44" />
+
 You do not need an Internet Gateway (IGW) for VPC Peering. In fact, one of the primary reasons people use VPC Peering is to keep traffic entirely within the AWS private network backbone, avoiding the public internet altogether.
 How it Works
 VPC Peering connects two VPCs at the network layer (Layer 3). Once the peering connection is established and the route tables are updated, instances in both VPCs communicate using private IP addresses.
