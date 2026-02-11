@@ -313,16 +313,16 @@ ami_id = "ami-0b6c6ebed2801a5cb"
 instance_type = "t3.micro"
 cidr = "0.0.0.0/0"
 ```
-instances
+**instances**
 <img width="2440" height="656" alt="image" src="https://github.com/user-attachments/assets/c8a0351a-3b21-4fee-b434-3158a2a1cf72" />
 
-endpoints
+**endpoints**
 <img width="2444" height="814" alt="image" src="https://github.com/user-attachments/assets/7683827d-4498-48b1-a144-75a557364659" />
 
-Fleet Manager
+**Fleet Manager**
 <img width="2310" height="990" alt="image" src="https://github.com/user-attachments/assets/6a40cfd2-eae7-4315-b8fb-f20224457c0d" />
 
-Peer Connections
+**Peer Connections**
 <img width="2418" height="970" alt="image" src="https://github.com/user-attachments/assets/733e63cb-7b23-44ef-aaf1-54ba3fade653" />
 
 
