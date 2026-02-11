@@ -21,31 +21,25 @@ Three important things required for the configuration to work are :
 Since there is no IGW, you can't SSH into these instances from your house. To test this in a real-world scenario, you would usually:
 
   - Use a Bastion Host in a third VPC that does have an IGW.
-
   - Use AWS Systems Manager (SSM): This allows you to "shell" into instances without an IGW or SSH keys, provided you have an SSM VPC Endpoint.
+  
 1) The Deployment: ENI Injection
 When you choose a subnet for your SSM endpoint, AWS "injects" an Elastic Network Interface (ENI) into that specific subnet.
+  - The IP: This ENI takes a Private IP address directly from your subnet's pool (e.g., 10.1.0.5).
+  - The Role: This ENI becomes the "local representative" of the AWS SSM service. Instead of your instance trying to reach a public IP over the internet, it sends    traffic to this local ENI.
 
-The IP: This ENI takes a Private IP address directly from your subnet's pool (e.g., 10.1.0.5).
 
-The Role: This ENI becomes the "local representative" of the AWS SSM service. Instead of your instance trying to reach a public IP over the internet, it sends traffic to this local ENI.
-+1
-
-2. The Bridge: AWS PrivateLink
-The ENI is the "entrance" to a technology called AWS PrivateLink.
-
+2) The Bridge: AWS PrivateLink
+The ENI leads to a technology called AWS PrivateLink.
 Once your data hits that ENI inside your VPC, it is whisked away across AWS’s internal fiber backbone to the SSM service "Mainland."
-
 Critically: This traffic never touches the public internet, even though it is leaving your VPC.
 
-3. Why the "Security Group" matters for the ENI
-Because the endpoint is an ENI, it behaves exactly like a virtual network card.
+3) Why the "Security Group" matters for the ENI
+  - Because the endpoint is an ENI, it behaves exactly like a virtual network card.
+  - It has its own Security Group attached.
+  - If that Security Group doesn't allow Inbound HTTPS (Port 443), the ENI will drop the packets from your EC2 instance, and your instance will remain "Offline."
 
-It has its own Security Group attached.
-
-If that Security Group doesn't allow Inbound HTTPS (Port 443), the ENI will drop the packets from your EC2 instance, and your instance will remain "Offline."
-
-4. How the Instance finds the ENI (DNS)
+4) How the Instance finds the ENI (DNS)
 If you enabled Private DNS, AWS creates a hidden record. When your instance asks for ssm.us-east-1.amazonaws.com, the VPC's internal DNS server says: "Don't go to the internet! Go to the private IP of that ENI we just made."
 
 
