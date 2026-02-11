@@ -22,17 +22,16 @@ Since there is no IGW, you can't SSH into these instances from your house. To te
 
   - Use a Bastion Host in a third VPC that does have an IGW.
   - Use AWS Systems Manager (SSM): This allows you to "shell" into instances without an IGW or SSH keys, provided you have an SSM VPC Endpoint.
-  
-1) The Deployment: ENI Injection
-When you choose a subnet for your SSM endpoint, AWS "injects" an Elastic Network Interface (ENI) into that specific subnet.
-  - The IP: This ENI takes a Private IP address directly from your subnet's pool (e.g., 10.1.0.5).
-  - The Role: This ENI becomes the "local representative" of the AWS SSM service. Instead of your instance trying to reach a public IP over the internet, it sends    traffic to this local ENI.
 
+1) The Deployment: ENI Injection
+  When you choose a subnet for your SSM endpoint, AWS "injects" an Elastic Network Interface (ENI) into that specific subnet.
+    - The IP: This ENI takes a Private IP address directly from your subnet's pool (e.g., 10.1.0.5).
+    - The Role: This ENI becomes the "local representative" of the AWS SSM service. Instead of your instance trying to reach a public IP over the internet, it sends    traffic to this local ENI.
 
 2) The Bridge: AWS PrivateLink
-The ENI leads to a technology called AWS PrivateLink.
-Once your data hits that ENI inside your VPC, it is whisked away across AWS’s internal fiber backbone to the SSM service "Mainland."
-Critically: This traffic never touches the public internet, even though it is leaving your VPC.
+   The ENI leads to a technology called AWS PrivateLink.
+   Once your data hits that ENI inside your VPC, it is whisked away across AWS’s internal fiber backbone to the SSM service "Mainland."
+   Critically: This traffic never touches the public internet, even though it is leaving your VPC.
 
 3) Why the "Security Group" matters for the ENI
   - Because the endpoint is an ENI, it behaves exactly like a virtual network card.
@@ -41,6 +40,12 @@ Critically: This traffic never touches the public internet, even though it is le
 
 4) How the Instance finds the ENI (DNS)
 If you enabled Private DNS, AWS creates a hidden record. When your instance asks for ssm.us-east-1.amazonaws.com, the VPC's internal DNS server says: "Don't go to the internet! Go to the private IP of that ENI we just made."
+
+It is important to understand that SSM Endpoints and VPC Peering are separate paths.
+
+   - Road A (The Bridge): VPC Peering. This is for EC2-to-EC2 traffic (Ping, SSH, database syncing).
+
+   - Road B (The Private Entrance): SSM Endpoints (ENIs). This is only for EC2-to-AWS Service traffic.
 
 
 ```text
