@@ -325,4 +325,12 @@ cidr = "0.0.0.0/0"
 **Peer Connections**
 <img width="2418" height="970" alt="image" src="https://github.com/user-attachments/assets/733e63cb-7b23-44ef-aaf1-54ba3fade653" />
 
+To get SSM working (Session Manager), you actually need three specific doors because SSM is split into different tasks:
 
+- ssm: The main control room (tells the instance what to do).
+
+- ssmmessages: The "chat" service (this is what handles the actual terminal/shell data you see).
+
+- ec2messages: The "courier" (handles sending system logs and status updates).
+
+<img width="2468" height="1022" alt="image" src="https://github.com/user-attachments/assets/8543ebe8-f57b-437c-8a99-e2557f24af02" />
