@@ -6,6 +6,12 @@ Three important things required for the configuration to work are :
    - Non-Overlapping CIDRs
    - Route Table Updates : You must manually add a route in each VPC’s route table that points to the CIDR block of the other VPC, using the Peering Connection ID (pcx-xxxxxx) as the target.
    - Security Groups : You need to update your Security Group rules to allow inbound/outbound traffic from the private IP addresses (or Security Group IDs) of the peered VPC.
+# Key benefits include:
+
+- Improved security by keeping traffic within the AWS network
+- Lower latency compared to routing through the internet
+- No additional costs for data transfer within the same AWS region
+- No single point of failure or bandwidth bottleneck   
 
 Since there is no IGW, you can't SSH into these instances from your house. To test this in a real-world scenario, you would usually:
 
@@ -349,3 +355,12 @@ Use AWS Systems Manager (SSM): This allows you to "shell" into instances without
 
 <img width="2394" height="940" alt="image" src="https://github.com/user-attachments/assets/cf74b44b-fa55-4e2d-b9a9-463846f59ff4" />
 
+
+# Common VPC Peering Limitations
+It’s important to be aware of some VPC peering limitations:
+
+- Non-Transitive Connectivity: If VPC A is peered with VPC B, and VPC B is peered with VPC C, VPC A cannot communicate with VPC C through VPC B.
+- CIDR Overlap: Peered VPCs cannot have overlapping CIDR blocks.
+- Maximum Peering Connections: Each VPC can have up to 125 peering connections (subject to change).
+- Security Group References: In some cases, you cannot reference a security group from a peered VPC directly.
+- VPC Endpoint Services: Some AWS services accessible via VPC endpoints might not be available across peering connections.
