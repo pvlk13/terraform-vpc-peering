@@ -149,6 +149,7 @@ resource "aws_security_group_rule" "allow_primary_to_secondary" {
 }
 
 # Create a security group for the VPC Endpoints that allows inbound traffic from both VPCs on port 443
+# You need 3 specific endpoints for SSM to work without an internet gateway. These should be in your Primary VPC (where you will start your testing).
 
 resource "aws_security_group" "endpoint_sg" {
   name   = "ssm-endpoint-sg"
