@@ -12,6 +12,23 @@ Since there is no IGW, you can't SSH into these instances from your house. To te
   - Use a Bastion Host in a third VPC that does have an IGW.
 
   - Use AWS Systems Manager (SSM): This allows you to "shell" into instances without an IGW or SSH keys, provided you have an SSM VPC Endpoint.
+
+```text
+.
+├── ec2.tf
+├── iam.tf
+├── main.tf
+├── output.tf
+├── peering.tf
+├── providers.tf
+├── route-table-association.tf
+├── route-table.tf
+├── security-groups.tf
+├── terraform.tfstate
+├── terraform.tfstate.backup
+├── terraform.tfvars
+└── variables.tf
+
 ```hcl
 terraform {
   required_providers {
@@ -25,6 +42,5 @@ terraform {
 provider "aws" {
   region = var.region 
 }
-   
-   
+
    
