@@ -24,6 +24,13 @@ Since there is no IGW, you can't SSH into these instances from your house. To te
 
   - Use AWS Systems Manager (SSM): This allows you to "shell" into instances without an IGW or SSH keys, provided you have an SSM VPC Endpoint.
 
+** The Deployment: ENI Injection **
+When you choose a subnet for your SSM endpoint, AWS "injects" an Elastic Network Interface (ENI) into that specific subnet.
+
+- The IP: This ENI takes a Private IP address directly from your subnet's pool (e.g., 10.1.0.5).
+
+- The Role: This ENI becomes the "local representative" of the AWS SSM service. Instead of your instance trying to reach a public IP over the internet, it sends traffic to this local ENI.  
+
 ```text
 .
 ├── ec2.tf
