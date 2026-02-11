@@ -189,6 +189,127 @@ resource "aws_route_table" "secondary-route-table" {
   tags = { Name = "secondary-route-table" }
 }
 ```
+route-table-association.tf
+```hcl
+resource "aws_route_table_association" "primary-route-table-association" {
+  subnet_id      = aws_subnet.primary-subnet.id
+  route_table_id = aws_route_table.primary-route-table.id
+}
 
+resource "aws_route_table_association" "secondary-route-table-association" {
+  subnet_id      = aws_subnet.secondary-subnet.id
+  route_table_id = aws_route_table.secondary-route-table.id
+}
+```
+ec2.tf
+```hcl
+# ---  EC2 INSTANCES ---
+resource "aws_instance" "ec2-primary-instance" {
+  ami                  = var.ami_id
+  instance_type        = var.instance_type
+  iam_instance_profile = aws_iam_instance_profile.ssm_profile.id
+  subnet_id            = aws_subnet.primary-subnet.id
+  vpc_security_group_ids = [aws_security_group.sg_vpc_primary.id]
+  associate_public_ip_address = false
+  tags                 = { Name = "primary-instance" }
+}
 
-   
+resource "aws_instance" "ec2-secondary-instance" {
+  ami                  = var.ami_id
+  instance_type        = var.instance_type
+  subnet_id            = aws_subnet.secondary-subnet.id
+  iam_instance_profile = aws_iam_instance_profile.secondary_profile.name
+  vpc_security_group_ids = [aws_security_group.sg_vpc_secondary.id]
+  associate_public_ip_address = false
+  tags                 = { Name = "secondary-instance" }
+}
+```
+iam.tf
+```hcl
+ #---  IAM & ENDPOINTS ---
+resource "aws_iam_role" "ssm_role" {
+  name = "ec2_ssm_role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{ Action = "sts:AssumeRole", Effect = "Allow", Principal = { Service = "ec2.amazonaws.com" } }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ssm_attach" {
+  role       = aws_iam_role.ssm_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_instance_profile" "ssm_profile" {
+  name = "ssm_profile"
+  role = aws_iam_role.ssm_role.name
+}
+
+resource "aws_iam_instance_profile" "secondary_profile" {
+  name = "secondary-instance-profile"
+  role = aws_iam_role.ssm_role.name # Use the name of your existing SSM IAM role
+}
+```
+output.tf
+```hcl
+# --- OUTPUTS ---
+output "primary_ip" { value = aws_instance.ec2-primary-instance.private_ip }
+output "secondary_ip" { value = aws_instance.ec2-secondary-instance.private_ip }
+```
+variables.tf
+```hcl
+variable "region" {
+  type        = string
+  description = "Region"
+}
+
+variable "primary_vpc_cidr" {
+  type        = string
+  description = "CIDR of VPC A"
+}
+
+variable "secondary_vpc_cidr" {
+  type        = string
+  description = "CIDR of VPC B"
+}
+
+variable "primary_subnet_cidr" {
+  type        = string
+  description = "CIDR of demo subnet A"
+}
+
+variable "secondary_subnet_cidr" {
+  type        = string
+  description = "CIDR of demo subnet B"
+}
+
+variable "ami_id" {
+  type        = string
+  description = "AMI ID for EC2 Instances"  
+  
+}
+variable "instance_type" {
+    type = string
+    description = "EC2 Instance Type"
+    default = "t3.micro"
+  
+}
+
+variable "cidr" {
+    type = string
+    description = "CIDR block for security group rules"
+    default = "0.0.0.0/0"
+  
+}
+```
+terraform.tfvars
+```hcl
+region             = "us-east-1"
+primary_vpc_cidr    = "10.0.0.0/16"
+secondary_vpc_cidr    = "10.1.0.0/16"
+primary_subnet_cidr = "10.0.1.0/24"
+secondary_subnet_cidr = "10.1.1.0/24"
+ami_id = "ami-0b6c6ebed2801a5cb"
+instance_type = "t3.micro"
+cidr = "0.0.0.0/0"
+```
