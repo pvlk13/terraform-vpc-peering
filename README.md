@@ -271,6 +271,7 @@ variable "primary_vpc_cidr" {
 variable "secondary_vpc_cidr" {
   type        = string
   description = "CIDR of VPC secondary"
+  
 }
 
 variable "primary_subnet_cidr" {
