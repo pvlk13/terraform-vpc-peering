@@ -201,6 +201,8 @@ resource "aws_route_table_association" "secondary-route-table-association" {
   route_table_id = aws_route_table.secondary-route-table.id
 }
 ```
+
+
 ec2.tf
 ```hcl
 # ---  EC2 INSTANCES ---
@@ -218,12 +220,15 @@ resource "aws_instance" "ec2-secondary-instance" {
   ami                  = var.ami_id
   instance_type        = var.instance_type
   subnet_id            = aws_subnet.secondary-subnet.id
+  # Update your existing aws_instance blocks to include this line:
   iam_instance_profile = aws_iam_instance_profile.secondary_profile.name
   vpc_security_group_ids = [aws_security_group.sg_vpc_secondary.id]
   associate_public_ip_address = false
   tags                 = { Name = "secondary-instance" }
 }
 ```
+
+First, the EC2 instances need permission to talk to the SSM service.
 iam.tf
 ```hcl
  #---  IAM & ENDPOINTS ---
