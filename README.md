@@ -313,3 +313,4 @@ ami_id = "ami-0b6c6ebed2801a5cb"
 instance_type = "t3.micro"
 cidr = "0.0.0.0/0"
 ```
+<img width="2440" height="656" alt="image" src="https://github.com/user-attachments/assets/c8a0351a-3b21-4fee-b434-3158a2a1cf72" />
