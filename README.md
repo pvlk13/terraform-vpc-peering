@@ -265,22 +265,22 @@ variable "region" {
 
 variable "primary_vpc_cidr" {
   type        = string
-  description = "CIDR of VPC A"
+  description = "CIDR of VPC primary"
 }
 
 variable "secondary_vpc_cidr" {
   type        = string
-  description = "CIDR of VPC B"
+  description = "CIDR of VPC secondary"
 }
 
 variable "primary_subnet_cidr" {
   type        = string
-  description = "CIDR of demo subnet A"
+  description = "CIDR of demo subnet primary"
 }
 
 variable "secondary_subnet_cidr" {
   type        = string
-  description = "CIDR of demo subnet B"
+  description = "CIDR of demo subnet secondary"
 }
 
 variable "ami_id" {
