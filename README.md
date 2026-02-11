@@ -28,7 +28,9 @@ Since there is no IGW, you can't SSH into these instances from your house. To te
 ├── terraform.tfstate.backup
 ├── terraform.tfvars
 └── variables.tf
-providers.tf
+```
+
+
 
 
    
