@@ -356,7 +356,7 @@ Use AWS Systems Manager (SSM): This allows you to "shell" into instances without
 <img width="2394" height="940" alt="image" src="https://github.com/user-attachments/assets/cf74b44b-fa55-4e2d-b9a9-463846f59ff4" />
 
 
-# Common VPC Peering Limitations
+### Common VPC Peering Limitations
 It’s important to be aware of some VPC peering limitations:
 
 - Non-Transitive Connectivity: If VPC A is peered with VPC B, and VPC B is peered with VPC C, VPC A cannot communicate with VPC C through VPC B.
