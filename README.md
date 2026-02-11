@@ -3,9 +3,9 @@ You do not need an Internet Gateway (IGW) for VPC Peering. In fact, one of the p
 How it Works
 VPC Peering connects two VPCs at the network layer (Layer 3). Once the peering connection is established and the route tables are updated, instances in both VPCs communicate using private IP addresses.
 Three important things required for the configuration to work are :
-   a) Non-Overlapping CIDRs
-   b) Route Table Updates : You must manually add a route in each VPC’s route table that points to the CIDR block of the other VPC, using the Peering Connection ID (pcx-xxxxxx) as the target.
-   c) Security Groups : You need to update your Security Group rules to allow inbound/outbound traffic from the private IP addresses (or Security Group IDs) of the peered VPC.
+   - Non-Overlapping CIDRs
+   - Route Table Updates : You must manually add a route in each VPC’s route table that points to the CIDR block of the other VPC, using the Peering Connection ID (pcx-xxxxxx) as the target.
+   - Security Groups : You need to update your Security Group rules to allow inbound/outbound traffic from the private IP addresses (or Security Group IDs) of the peered VPC.
 
 Since there is no IGW, you can't SSH into these instances from your house. To test this in a real-world scenario, you would usually:
 
