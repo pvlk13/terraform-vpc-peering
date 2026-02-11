@@ -1,0 +1,8 @@
+region             = "us-east-1"
+primary_vpc_cidr    = "10.0.0.0/16"
+secondary_vpc_cidr    = "10.1.0.0/16"
+primary_subnet_cidr = "10.0.1.0/24"
+secondary_subnet_cidr = "10.1.1.0/24"
+ami_id = "ami-0b6c6ebed2801a5cb"
+instance_type = "t3.micro"
+cidr = "0.0.0.0/0"
