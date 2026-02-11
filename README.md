@@ -333,4 +333,12 @@ To get SSM working (Session Manager), you actually need three specific doors bec
 **Peer Connections**
 <img width="2418" height="970" alt="image" src="https://github.com/user-attachments/assets/733e63cb-7b23-44ef-aaf1-54ba3fade653" />
 
+Use AWS Systems Manager (SSM): This allows you to "shell" into instances without an IGW or SSH keys, provided you have an SSM VPC Endpoint.
+
+<img width="2386" height="892" alt="image" src="https://github.com/user-attachments/assets/08e7c4f5-86e9-41c1-a592-614010b9d5a2" />
+
+
 <img width="2468" height="1022" alt="image" src="https://github.com/user-attachments/assets/8543ebe8-f57b-437c-8a99-e2557f24af02" />
+
+<img width="2394" height="940" alt="image" src="https://github.com/user-attachments/assets/cf74b44b-fa55-4e2d-b9a9-463846f59ff4" />
+
