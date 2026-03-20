@@ -84,6 +84,18 @@ With VPC Peering:
 
 ---
 
+## 🔧 Configuration
+
+| Parameter | Default Value | Description |
+| :--- | :--- | :--- |
+| **🌍 Primary CIDR** | `10.0.0.0/16` | Primary VPC CIDR block |
+| **🌍 Secondary CIDR** | `10.1.0.0/16` | Secondary VPC CIDR block |
+| **📍 Region** | `us-east-1` | AWS region for deployment |
+| **🖥️ Instance Type** | `t3.micro` | Default EC2 instance type (Free Tier eligible) |
+| **🖼️ AMI** | `Ubuntu 20.04` | Default Amazon Machine Image ID |
+
+---
+
 ## 🏛️ Architecture
 <img width="1494" height="842" alt="image" src="https://github.com/user-attachments/assets/0821ed71-e942-4ad0-ad44-267896743c44" />
 
