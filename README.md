@@ -520,3 +520,7 @@ It’s important to be aware of some VPC peering limitations:
 | **9. Kernel ICMP Block** | SSH → `/proc/sys/...` | If value is `1`, run: `echo 0 \| sudo tee /proc/sys/net/ipv4/icmp_echo_ignore_all` |
 | **10. Subnet Mismatch** | EC2 → Instance Details | Confirm Primary is in `10.0.x.x` and Secondary is in `10.1.x.x`. Relaunch if wrong. |
 | **11. Wrong Route Target** | VPC → Route Tables | Ensure the target for the peering CIDR is the **Peering Connection ID** (`pcx-...`), not an IGW. |
+
+### 👨‍💻 Author
+
+vijayalakshmi
