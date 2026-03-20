@@ -477,7 +477,7 @@ To get SSM working (Session Manager), you actually need three specific doors bec
 
 - ec2messages: The "courier" (handles sending system logs and status updates).
 
-**endpoints**
+**Endpoints**
 <img width="2444" height="814" alt="image" src="https://github.com/user-attachments/assets/7683827d-4498-48b1-a144-75a557364659" />
 
 **Fleet Manager**
@@ -504,3 +504,19 @@ It’s important to be aware of some VPC peering limitations:
 - Maximum Peering Connections: Each VPC can have up to 125 peering connections (subject to change).
 - Security Group References: In some cases, you cannot reference a security group from a peered VPC directly.
 - VPC Endpoint Services: Some AWS services accessible via VPC endpoints might not be available across peering connections.
+
+### 🔧 VPC Peering Troubleshooting Guide
+
+| Issue / Check | Location / Path | The Fix |
+| :--- | :--- | :--- |
+| **1. Routes Missing** | VPC → Route Tables | **Primary RT:** Add `10.1.0.0/16` → `pcx-xxxx`<br>**Secondary RT:** Add `10.0.0.0/16` → `pcx-xxxx` |
+| **2. Subnet Association** | Route Tables → Subnet Associations | Ensure specific subnets are explicitly associated with their respective Route Tables. |
+| **3. Primary SG Egress** | EC2 → Security Groups | **In Primary SG:** Add Outbound Rule: `All Traffic`, Protocol `-1`, Port `0-0`, Destination `10.1.0.0/16` |
+| **4. Secondary SG Egress** | EC2 → Security Groups | **In Secondary SG:** Add Outbound Rule: `All Traffic`, Protocol `-1`, Port `0-0`, Destination `10.0.0.0/16` |
+| **5. NACL Blocking** | VPC → Network ACLs | If using Custom NACL, add Inbound/Outbound rules allowing Protocol `58` (ICMP) for both CIDRs. |
+| **6. Peering Status** | VPC → Peering Connections | Status must be **Active**. If `pending-acceptance`, right-click and select **Accept Request**. |
+| **7. Wrong SG Attached** | EC2 → Instances | Verify `primary-sg` is on Primary instance and `secondary-sg` is on Secondary. Remove default SGs. |
+| **8. OS Firewall** | SSH → `systemctl` | Run `sudo systemctl stop firewalld` or add ICMP rule: `sudo firewall-cmd --add-protocol=icmp --permanent` |
+| **9. Kernel ICMP Block** | SSH → `/proc/sys/...` | If value is `1`, run: `echo 0 \| sudo tee /proc/sys/net/ipv4/icmp_echo_ignore_all` |
+| **10. Subnet Mismatch** | EC2 → Instance Details | Confirm Primary is in `10.0.x.x` and Secondary is in `10.1.x.x`. Relaunch if wrong. |
+| **11. Wrong Route Target** | VPC → Route Tables | Ensure the target for the peering CIDR is the **Peering Connection ID** (`pcx-...`), not an IGW. |
