@@ -55,6 +55,12 @@ It also includes the required **SSM VPC Interface Endpoints** so you can manage 
 
 ---
 
+## 🔧 Configuration
+Default Values
+ParameterDefaultDescription🌍 Primary CIDR10.0.0.0/16Primary VPC CIDR block🌍 Secondary CIDR10.1.0.0/16Secondary VPC CIDR block📍 Regionus-east-1AWS region🖥️ Instance Typet3.microEC2 instance type🖼️ AMIUbuntu 20.04Default AMI ID
+
+---
+
 ## 🧠 Why no Internet Gateway?
 
 A common misconception is that VPC Peering needs an Internet Gateway.  
