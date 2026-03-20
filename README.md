@@ -120,9 +120,23 @@ It is important to understand that SSM Endpoints and VPC Peering are separate pa
    - Road A (The Bridge): VPC Peering. This is for EC2-to-EC2 traffic (Ping, SSH, database syncing).
 
    - Road B (The Private Entrance): SSM Endpoints (ENIs). This is only for EC2-to-AWS Service traffic.
+## 🔄 Traffic flow
 
+- Road A — VPC Peering
 
+  - Used for EC2-to-EC2 private communication
+
+  - Example: ping, app traffic, internal service communication
+
+- Road B — SSM VPC Endpoints
+
+  - Used for EC2-to-AWS service communication
+
+  - Example: Session Manager shell access without SSH or public internet
+
+## 📂 Project structure
 ```text
+
 .
 ├── ec2.tf
 ├── iam.tf
