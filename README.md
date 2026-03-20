@@ -75,7 +75,7 @@ With VPC Peering:
 
 ---
 
-## Architecture of the **VPC Peering**
+## 🏛️ Architecture
 <img width="1494" height="842" alt="image" src="https://github.com/user-attachments/assets/0821ed71-e942-4ad0-ad44-267896743c44" />
 
 You do not need an Internet Gateway (IGW) for VPC Peering. In fact, one of the primary reasons people use VPC Peering is to keep traffic entirely within the AWS private network backbone, avoiding the public internet altogether.
