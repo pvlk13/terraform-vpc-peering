@@ -1,5 +1,79 @@
 
-# Project VPC - Peering without IGW
+# 🌐 Terraform AWS VPC Peering (Without Internet Gateway)
+
+<p align="center">
+  <img alt="Terraform" src="https://img.shields.io/badge/Terraform-v1.x-7B42BC?logo=terraform&logoColor=white">
+  <img alt="AWS" src="https://img.shields.io/badge/AWS-VPC%20Peering-FF9900?logo=amazonaws&logoColor=white">
+  <img alt="SSM" src="https://img.shields.io/badge/AWS-Systems%20Manager-3F48CC?logo=amazonaws&logoColor=white">
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-green">
+</p>
+
+<p align="center">
+  Private connectivity between two AWS VPCs using <b>VPC Peering</b>, with <b>no Internet Gateway</b>, and remote management through <b>AWS Systems Manager (SSM)</b>.
+</p>
+
+---
+
+## 📌 Overview
+
+This project provisions an AWS lab that demonstrates how two VPCs can communicate **privately** using **VPC Peering**, without exposing instances to the public internet.
+
+It also includes the required **SSM VPC Interface Endpoints** so you can manage EC2 instances using **AWS Systems Manager Session Manager**, even though the instances do **not** have public IP addresses and there is **no Internet Gateway**.
+
+---
+
+## ✨ What this project creates
+
+- 🏗️ **2 VPCs**
+  - `primary-vpc`
+  - `secondary-vpc`
+
+- 🌍 **2 subnets**
+  - One subnet in each VPC
+
+- 🔗 **1 VPC Peering Connection**
+  - Enables private routing between both VPCs
+
+- 🛣️ **Custom route tables**
+  - Routes traffic between the two CIDR ranges through the peering connection
+
+- 🖥️ **2 EC2 instances**
+  - One in each subnet
+  - No public IP assigned
+
+- 🔐 **Security groups**
+  - Permit traffic between the peered VPC CIDR blocks
+  - Allow HTTPS to SSM endpoints where needed
+
+- 🧾 **IAM role + instance profile**
+  - Attaches `AmazonSSMManagedInstanceCore` permissions for Session Manager access
+
+- 🚪 **SSM Interface Endpoints**
+  - `ssm`
+  - `ssmmessages`
+  - `ec2messages`
+
+---
+
+## 🧠 Why no Internet Gateway?
+
+A common misconception is that VPC Peering needs an Internet Gateway.  
+It does **not**.
+
+With VPC Peering:
+
+- Traffic stays on the **AWS private backbone**
+- Instances communicate using **private IP addresses**
+- You avoid unnecessary exposure to the public internet
+- Latency is usually lower than internet-based routing
+
+### ✅ Requirements for VPC Peering to work
+
+- Non-overlapping CIDR blocks
+- Route tables updated on both sides
+- Security groups allowing the required traffic
+
+---
 
 ## Architecture of the **VPC Peering**
 <img width="1494" height="842" alt="image" src="https://github.com/user-attachments/assets/0821ed71-e942-4ad0-ad44-267896743c44" />
