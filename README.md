@@ -54,13 +54,15 @@ It also includes the required **SSM VPC Interface Endpoints** so you can manage 
   - `ec2messages`
 
 ---
+## 🔧 Configuration
 
-Parameter,Default Value,Description
-🌍 Primary CIDR,10.0.0.0/16,Primary VPC CIDR block
-🌍 Secondary CIDR,10.1.0.0/16,Secondary VPC CIDR block
-📍 Region,us-east-1,AWS region for deployment
-🖥️ Instance Type,t3.micro,Default EC2 instance type (Free Tier eligible)
-🖼️ AMI,Ubuntu 20.04,Default Amazon Machine Image ID
+| Parameter | Default Value | Description |
+| :--- | :--- | :--- |
+| **🌍 Primary CIDR** | `10.0.0.0/16` | Primary VPC CIDR block |
+| **🌍 Secondary CIDR** | `10.1.0.0/16` | Secondary VPC CIDR block |
+| **📍 Region** | `us-east-1` | AWS region for deployment |
+| **🖥️ Instance Type** | `t3.micro` | Default EC2 instance type (Free Tier eligible) |
+| **🖼️ AMI** | `Ubuntu 20.04` | Default Amazon Machine Image ID |
 
 ---
 
